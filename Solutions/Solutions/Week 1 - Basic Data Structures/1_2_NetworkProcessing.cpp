@@ -6,18 +6,21 @@ using namespace std;
 
 void processPackets(const int queueSize, int numberOfPackets, vector<int> &arrivalTime, vector<int> &processingTime) {
 
-	int currentQueueSize = 0;
-	int queueFinishTime = 0;
+	vector<int> packetQueue;
 	vector<int> processingTimes;
 
 	for (int i = 0; i < numberOfPackets; i++) {
-		if (arrivalTime[i] >= queueFinishTime) {
-			queueFinishTime = arrivalTime[i] + processingTime[i];
-			currentQueueSize = 1;
+		if (packetQueue.size != 0 && arrivalTime[i] > packetQueue.front()) {
+			packetQueue.erase(packetQueue.begin());
+		}
+		
+		if (packetQueue.size() == 0 || arrivalTime[i] >= packetQueue.back() ) {
+			packetQueue.push_back(arrivalTime[i] + processingTime[i]);
+			
 			cout << arrivalTime[i] << endl;
 		}
-		else if (currentQueueSize < queueSize) {
-			currentQueueSize++;
+		else if (packetQueue.size() < queueSize) {
+			packetQueue.push_back()
 			cout << queueFinishTime << endl;
 			queueFinishTime += processingTime[i];
 		}
